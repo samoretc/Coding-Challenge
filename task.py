@@ -32,8 +32,11 @@ class QueryTask(object):
 	def numOfOpenClosedTasksOnDate(self, date):
 		# First if a task was created after date than it was neither open nor closed. 
 		createdBefore = filter( lambda x: x.createDate < date , self.tasks)
-		openTasks = filter(lambda x: x.status =='Recieved', createdBefore)
+		
+		# I'm not sure which way is right. I wold have that they would retrunt he same results
+		openTasks = filter(lambda x: x.status =='Received', createdBefore)
 		closedTasks = filter(lambda x: x.status=='Closed',  createdBefore)
+
 		openTasks = filter(lambda x: x.closeDate < date , createdBefore)
 		closedTasks = filter(lambda x: date < x.closeDate, createdBefore)
 		return openTasks, closedTasks
@@ -42,38 +45,41 @@ class QueryTask(object):
 	how many were closed in that range. The start date is inclusive, the end 
 	date is exclusive."""
 	def openBetweenDates(self, openDate, closeDate): 
-		return { 'tasksOpened' : filter( lambda x : openDate < x.createDate and x.closeDate or x.closeDate = None),  self.tasks)
+		return { 'tasksOpened' : filter( lambda x : openDate < x.createDate and (openDate < x.closeDate or x.closeDate == None),  self.tasks) }
 	
 
-	# def findCurrentNumberofOpenAndClosedTasks(self, date):
-		# 
-	"""What's weird aboutt his is that the tasks with the same instanceID have all had the same task task names from my analysis """
-	# def mostRecentTaskNameforInstanceId(self, instanceId):
-	# 	tasksWithInstanceId = filter( lambda x : x.instanceId == instanceId , self.tasks )
-	# 	return max( tasksWithInstanceId , key=lambda x: x.createDate).name
+	"""Given a particular instanceId, provide the name of the most recent task.
+	
+	What's weird aboutt his is that the tasks with the same instanceID have all had 
+	the same task task names from my analysis """
+	def mostRecentTaskNameforInstanceId(self, instanceId):
+		tasksWithInstanceId = filter( lambda x : x.instanceId == instanceId , self.tasks )
+		return max( tasksWithInstanceId , key=lambda x: x.createDate).name 
 
-	# def countforInstanceId(self, instanceId): 
-	# 	return len( filter(  lambda x : x.instanceId == instanceId   , self.tasks) )
+	"""Given a particular instanceId, provide the count of tasks."""
+	def countforInstanceId(self, instanceId): 
+		return len( filter(  lambda x : x.instanceId == instanceId   , self.tasks) )
 
-	""" I believe this query is for the current time """
+	""" Given a particular assignee, provide the count of open and closed tasks for that assignee.
+
+	I believe this query is for the current time """
 	def openAndClosedTaskforAssignee(self, assignee):
 		return {   'openTasks' : filter(  lambda x : x.assignee == assignee and x.status == 'Recieved', self.tasks),
 				  'closedTasks': filter(  lambda x : x.assignee == assignee and x.status == 'Closed',   self.tasks) }
 
 
 
-#if __name__ == '__main__':
-	# json_data = open('task-2.json').read()
-	# data = json.loads(json_data)
-	# pprint
-tasks = []
-with open('task-2.json') as data_file:
-	data = json.load(data_file)
+if __name__ == '__main__':
+	json_data = open('task-2.json').read()
+	data = json.loads(json_data)
+	pprint
+	tasks = []
+	with open('task-2.json') as data_file:
+		data = json.load(data_file)
 
-for  i in data:
-	tasks.append(Task(i))
+	for  i in data:
+		tasks.append(Task(i))
 
-	# QueryTask = QueryTask(tasks)
-	# print QueryTask.countforInstanceId(680)
-	# print QueryTask.mostRecentTaskNameforInstanceId(680)
-#	dateTimeOpen = 
+	QueryTask = QueryTask(tasks)
+	print QueryTask.countforInstanceId(680)
+	print QueryTask.mostRecentTaskNameforInstanceId(680)
