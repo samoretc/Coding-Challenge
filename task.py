@@ -45,7 +45,8 @@ class QueryTask(object):
 	how many were closed in that range. The start date is inclusive, the end 
 	date is exclusive."""
 	def openBetweenDates(self, openDate, closeDate): 
-		return { 'tasksOpened' : filter( lambda x : openDate < x.createDate and (openDate < x.closeDate or x.closeDate == None),  self.tasks) }
+		openTasks = filter( lambda x : openDate < x.createDate and (openDate < x.closeDate or x.closeDate == None),  self.tasks)
+		return openTasks
 	
 
 	"""Given a particular instanceId, provide the name of the most recent task.
@@ -64,8 +65,9 @@ class QueryTask(object):
 
 	I believe this query is for the current time """
 	def openAndClosedTaskforAssignee(self, assignee):
-		return {   'openTasks' : filter(  lambda x : x.assignee == assignee and x.status == 'Recieved', self.tasks),
-				  'closedTasks': filter(  lambda x : x.assignee == assignee and x.status == 'Closed',   self.tasks) }
+		openTasks = filter(  lambda x : x.assignee == assignee and x.status == 'Recieved', self.tasks)
+		closedTasks = 'closedTasks': filter(  lambda x : x.assignee == assignee and x.status == 'Closed',   self.tasks)
+		return openTasks, closedTasks
 
 
 
