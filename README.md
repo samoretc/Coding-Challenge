@@ -3,7 +3,7 @@
 task-2.json is a json file of task data pulled from a Business Process Management system.  
 
 Here is an example of one element in the json:
- {
+ ```{
    "instanceName": "New Coverage Branch: 486",
    "dueDate": "2014-10-06T23:32:33Z",
    "priority": "High",
@@ -19,7 +19,7 @@ Here is an example of one element in the json:
    "variables": {"CoverageBranchAnnualRevenue": {"value": 143193}},
    "processName": "New Coverage Branch",
    "id": "1433"
- }
+ }```
 
 Each instance can have one or more task.  In the above json block we are looking at a task and the instance related to that task.
 
