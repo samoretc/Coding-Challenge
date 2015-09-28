@@ -1,7 +1,9 @@
 import unittest
 import json
 from task import *
-import pdb
+
+
+"""This file contains unit tests for task.py"""
 class ProblemTests(unittest.TestCase):
 	def setUp(self): 
 		with open('test.json') as data_file:
@@ -14,22 +16,28 @@ class ProblemTests(unittest.TestCase):
 	def test_numOfOpenClosedTasksAtTime(self):
 		Query = QueryTask([Task(self.data)])
 
-		time = "2015-03-22T22:24:55Z" # The second before the task is created
+		# The second before the task is created
+		time = "2015-03-22T22:24:55Z" 
 		assert Query.numOfOpenClosedTasksAtTime(time) == (0 , 0)
 
-		time = "2015-03-22T22:24:56Z" # The second the task is created	
+		# The second the task is created
+		time = "2015-03-22T22:24:56Z" 	
 		assert Query.numOfOpenClosedTasksAtTime(time) == (1 , 0)	
 
-		time = "2015-03-22T22:24:57Z" # The second after the task is created 
+		# The second after the task is created 
+		time = "2015-03-22T22:24:57Z" 
 		assert Query.numOfOpenClosedTasksAtTime(time) == (1, 0)	
 
-		time =   "2015-04-22T22:24:55Z" # The second before the task is closed	
+		# The second before the task is closed
+		time =   "2015-04-22T22:24:55Z" 	
 		assert Query.numOfOpenClosedTasksAtTime(time) == (1, 0)
 
-		time =   "2015-04-22T22:24:56Z" # The second  the task is closed
+		# The second  the task is closed
+		time =   "2015-04-22T22:24:56Z" 
 		assert Query.numOfOpenClosedTasksAtTime(time) == (0, 1)
 
-		time =   "2015-04-22T22:24:57Z" # The second after the task is closed
+		# The second after the task is closed
+		time =   "2015-04-22T22:24:57Z" 
 		assert Query.numOfOpenClosedTasksAtTime(time) == (0 , 1)	
 
 		# Test if the the JSON Data has no close date
@@ -47,7 +55,7 @@ class ProblemTests(unittest.TestCase):
 	def test_numBetweenDates(self): 
 		Query = QueryTask([Task(self.data)])
 
-		# Test just outside the start and end time of the tsk
+		# Test just outside the start and end time of the task
 		startTime = "2015-03-22T22:24:55Z" # The second before the task is created	
 		endTime =   "2015-04-22T22:24:57Z" # The second after the task is closed 
 		assert Query.numBetweenDates(startTime, endTime) == (1, 1)
