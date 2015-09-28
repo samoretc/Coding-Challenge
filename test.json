@@ -1,9 +1,10 @@
-[
- { "column1" : null ,
-   "column2" : "value2" 
- },
- { "column1" : "value_1", 
-   "column2" : "value_2"
+{
+"instanceName" : "Client", 
+"createDate" : "2015-03-22T22:24:56Z", 
+"closeDate" : "2015-04-22T22:24:56Z", 
+"name": "Review Client On-Boarding Request", 
+"assignee": "BP3", 
+"instanceId" : "680", 
+"status" : "Closed", 
+"id": "123"
 }
-]
-
