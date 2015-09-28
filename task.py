@@ -25,8 +25,8 @@ class QueryTask(object):
 	def numOfOpenClosedTasksAtTime(self, time): 
 		time =  datetime.strptime( time, "%Y-%m-%dT%H:%M:%SZ") 
 		createdBeforeAndWithEndDate = filter( lambda x: x.createDate <= time and x.closeDate != None , self.tasks)
-		closedTasks =   		len ( filter(lambda x: x.closeDate <= time , createdBeforeAndWithEndDate) )
-		openTasksWithEndDate = 	len	( filter(lambda x: time < x.closeDate, createdBeforeAndWithEndDate) ) 
+		closedTasks = len ( filter(lambda x: x.closeDate <= time , createdBeforeAndWithEndDate) )
+		openTasksWithEndDate = 	len ( filter(lambda x: time < x.closeDate, createdBeforeAndWithEndDate) ) 
 		openTasksWithoutEndDate=len ( filter(lambda x: x.createDate <= time and x.closeDate == None, self.tasks) )
 		openTasks = openTasksWithEndDate + openTasksWithoutEndDate
 		return openTasks, closedTasks
